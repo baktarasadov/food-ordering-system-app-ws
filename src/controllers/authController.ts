@@ -1,16 +1,32 @@
 import { Request, Response } from "express";
 import { IUser } from '../types/user/IUser';
 import { User } from "../models/User";
-import { IUserResponse } from "../types/user/IUserResponse";
-import { IAuth } from '../types/auth/IAuth';
-import { IAuthResponse } from "../types/auth/IAuthResponse";
 import { authConvert } from "../utils/convert/auth";
+import { IResponse } from "../types/share/IResponse";
+import { registerSchema } from '../utils/validations/auth/authRegister'
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-export async function registerUser(req: Request, res: Response<IAuthResponse>) {
+export async function registerUser(req: Request, res: Response<IResponse>) {
+
+
 
     try {
+        // await registerSchema.validate(req.body, { abortEarly: false });
+        const findUser: IUser | null = await User.findOne(
+            {
+                where: { fullname: req.body.fullname }
+            }
+        );
+        const findAdmin: IUser | null = req.body.role == "admin" ? await User.findOne(
+            {
+                where: { role: 'admin' }
+            }
+        ) : null
+        if (findUser || findAdmin) {
+            return res.status(404).json({ success: false, message: "There is already an account" })
+
+        }
         const passwordHash: string = await bcrypt.hash(req.body.password, 10);
         const saveUser: IUser = await User.create({ ...req.body, password: passwordHash });
         const { accessToken } = generateTokens(saveUser);
@@ -19,13 +35,11 @@ export async function registerUser(req: Request, res: Response<IAuthResponse>) {
     } catch (error: any) {
         console.log("Error", error);
         return res.status(404).json({ success: false, message: "Internal Server Error" })
-
-
     }
-
-
 }
-export async function loginUser(req: Request, res: Response<IAuthResponse>) {
+
+
+export async function loginUser(req: Request, res: Response<IResponse>) {
     const { email, password } = req.body;
     try {
         const findUser: IUser | null = await User.findOne(
@@ -57,7 +71,7 @@ export async function loginUser(req: Request, res: Response<IAuthResponse>) {
 
 
 
-export async function loginAdmin(req: Request, res: Response<IAuthResponse>) {
+export async function loginAdmin(req: Request, res: Response<IResponse>) {
     const { fullname, password } = req.body;
     try {
         const findUser: IUser | null = await User.findOne(

@@ -22,15 +22,16 @@ User.init(
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
+
         },
         fullname: {
             type: DataTypes.STRING,
             allowNull: true,
+            unique: true,
         },
         email: {
             type: DataTypes.STRING,
             allowNull: true,
-            unique: true,
         },
         phoneNumber: {
             type: DataTypes.STRING,
@@ -54,8 +55,7 @@ User.init(
             type: DataTypes.STRING,
             allowNull: true,
             defaultValue: 'user',
-            unique: true
-        }
+        },
     },
     {
         sequelize,
