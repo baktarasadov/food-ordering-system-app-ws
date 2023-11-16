@@ -11,6 +11,7 @@ export class User extends Model {
     public password!: String;
     public confirmPassword!: String;
     public emailVerified!: String;
+    public role?: String;
 
 
 }
@@ -49,6 +50,12 @@ User.init(
             type: DataTypes.STRING,
             allowNull: true,
         },
+        role: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: 'user',
+            unique: true
+        }
     },
     {
         sequelize,

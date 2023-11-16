@@ -11,44 +11,81 @@ export async function registerUser(req: Request, res: Response<IUserResponse>) {
         const passwordHash: string = await bcrypt.hash(req.body.password, 10);
         const saveUser: IUser = await User.create({ ...req.body, password: passwordHash });
 
-        const { accessToken, refreshToken } = generateTokens(saveUser);
-        res.status(200).json({ success: true, data: saveUser, message: 'User created successfully', accessToken: accessToken, refreshToken: refreshToken });
+        const { accessToken } = generateTokens(saveUser);
+        return res.status(200).json({ success: true, data: saveUser, message: 'User created successfully', accessToken: accessToken });
     } catch (error: any) {
-        res.status(404).json({ success: false, message: "Internal Server Error" })
         console.log("Error", error);
+        return res.status(404).json({ success: false, message: "Internal Server Error" })
 
 
     }
 
 
 }
-export async function loginUser(req: Request, res: Response<IUserResponse>): Promise<void> {
+export async function loginUser(req: Request, res: Response<IUserResponse>) {
     const { email, password } = req.body;
-    const findUser: IUser | null = await User.findOne(
-        {
-            where: { email: email }
-        }
-    );
-    if (!findUser) {
-        res.status(404).json({ success: false, message: "User not found" })
+    try {
+        const findUser: IUser | null = await User.findOne(
+            {
+                where: { email: email }
+            }
+        );
+        if (!findUser) {
+            return res.status(404).json({ success: false, message: "User not found" })
 
+        }
+
+        const passwordMatch: boolean = await bcrypt.compare(password, findUser?.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ success: false, message: "Incorrect password" });
+        }
+        const { accessToken } = generateTokens(findUser);
+        return res.status(200).json({ success: true, data: findUser, message: 'User login successfully', accessToken: accessToken });
+
+    } catch (error: any) {
+        console.log(error);
+
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 
 }
 
+export async function loginAdmin(req: Request, res: Response<IUserResponse>) {
+    const { fullname, password } = req.body;
+    try {
+        const findUser: IUser | null = await User.findOne(
+            {
+                where: { fullname: fullname }
+            }
+        );
+        if (!findUser) {
+            return res.status(404).json({ success: false, message: "Admin not found" })
 
-const generateTokens = (user: IUser): { accessToken: string, refreshToken: string } => {
+        }
+
+        const passwordMatch: boolean = await bcrypt.compare(password, findUser?.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ success: false, message: "Incorrect password" });
+        }
+        const { accessToken } = generateTokens(findUser);
+        return res.status(200).json({ success: true, data: findUser, message: 'Admin login successfully', accessToken: accessToken });
+
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+
+}
+
+const generateTokens = (user: IUser): { accessToken: string } => {
     const accessToken = jwt.sign(
-        { userId: user.id, fullname: user.fullname },
+        { userId: user.id, fullname: user.fullname, role: user.role },
         process.env.ACCESS_TOKEN,
-        { expiresIn: '1h' }
     );
 
-    const refreshToken = jwt.sign(
-        { userId: user.id, fullname: user.fullname },
-        process.env.REFRESH_TOKEN,
-        { expiresIn: '7d' }
-    );
 
-    return { accessToken: `Bearer ${accessToken}`, refreshToken: `Bearer ${refreshToken}` };
+
+    return { accessToken: `Bearer ${accessToken}` };
 };

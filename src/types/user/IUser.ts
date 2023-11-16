@@ -7,4 +7,5 @@ export interface IUser {
     job?: String;
     password: String
     confirmPassword: String
+    role?: String
 }
