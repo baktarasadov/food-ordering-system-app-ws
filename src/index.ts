@@ -2,14 +2,19 @@ import express from 'express';
 require('dotenv').config();
 import { sequelize } from './config/dbConnect';
 import authRouter from './routes/authRoute';
+import userRouter from './routes/userRoute';
 const bodyParser = require("body-parser");
 
 const app = express();
 
 const port: string | undefined = process.env.APP_PORT;
 const base: string = "/api"
+
+
 app.use(express.json());
+
 app.use(base, authRouter);
+app.use(base, userRouter)
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

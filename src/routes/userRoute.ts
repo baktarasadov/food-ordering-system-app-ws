@@ -1,9 +1,16 @@
-// import express, { Router } from 'express';
-// import { getUsers } from '../controllers/userController';
+import express, { Router } from 'express';
+import { deleteUser, getUser, getUsers, updateUser } from '../controllers/userController';
+import { authMiddleware, isAdmin } from '../middleware/authMiddleware';
 
-// const router: Router = express.Router();
-// const main: string = '/users'
+const userRouter: Router = express.Router();
+const main: string = '/users'
 
-// router.get(`${main}/all`, getUsers);
+userRouter.get(`${main}/all`, authMiddleware, isAdmin, getUsers);
+userRouter.get(`${main}/get/:id`, authMiddleware, getUser);
+userRouter.patch(`${main}/update/:id`, authMiddleware, updateUser);
+userRouter.delete(`${main}/delete/:id`, authMiddleware, deleteUser);
 
-// export default router;
+
+
+
+export default userRouter;
