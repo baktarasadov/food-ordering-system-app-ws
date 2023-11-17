@@ -6,12 +6,12 @@ import { IResponse } from "../types/share/IResponse";
 import { registerSchema } from '../utils/validations/auth/authRegister'
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+import * as yup from 'yup';
 
 export async function registerUser(req: Request, res: Response<IResponse>) {
 
-
-
     try {
+        const validatedData = await registerSchema.validate(req.body, { abortEarly: false });
         // await registerSchema.validate(req.body, { abortEarly: false });
         const findUser: IUser | null = await User.findOne(
             {
@@ -34,6 +34,10 @@ export async function registerUser(req: Request, res: Response<IResponse>) {
         return res.status(200).json({ success: true, data: authConvert(saveUser, accessToken), message: 'User created successfully' });
     } catch (error: any) {
         console.log("Error", error);
+        if (error instanceof yup.ValidationError) {
+            // Handle yup validation errors
+            return res.status(400).json({ success: false, errors: error.errors, message: 'Invalid input data' });
+        }
         return res.status(404).json({ success: false, message: "Internal Server Error" })
     }
 }
