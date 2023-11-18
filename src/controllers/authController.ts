@@ -52,14 +52,14 @@ export async function loginUser(req: Request, res: Response<IResponse>) {
             }
         );
         if (!findUser) {
-            return res.status(404).json({ success: false, message: "User not found" })
+            return res.status(404).json({ success: false, message: "The full name or password is incorrect" })
 
         }
 
         const passwordMatch: boolean = await bcrypt.compare(password, findUser?.password);
 
         if (!passwordMatch) {
-            return res.status(401).json({ success: false, message: "Incorrect password" });
+            return res.status(401).json({ success: false, message: "The full name or password is incorrect" });
         }
         const { accessToken } = generateTokens(findUser);
 
