@@ -9,8 +9,7 @@ export class User extends Model {
     public job!: String;
     public address!: String;
     public password!: String;
-    public confirmPassword!: String;
-    public emailVerified!: String;
+    public file!: String;
     public role?: String;
 
 
@@ -42,15 +41,16 @@ User.init(
         job: {
             type: DataTypes.STRING,
         },
+        file: {
+            type: DataTypes.STRING,
+
+        },
 
         password: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        confirmPassword: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
+
         role: {
             type: DataTypes.STRING,
             allowNull: true,

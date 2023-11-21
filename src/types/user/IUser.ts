@@ -6,6 +6,6 @@ export interface IUser {
     address?: String;
     job?: String;
     password: String
-    confirmPassword: String
+    file: String
     role?: String
 }

@@ -1,6 +1,5 @@
 import e, { NextFunction, Request, Response } from "express";
 import { IUser } from "../types/user/IUser";
-import { User } from "../models/User";
 const jwt = require('jsonwebtoken');
 
 interface AuthRequest extends Request {

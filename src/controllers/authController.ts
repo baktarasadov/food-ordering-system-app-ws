@@ -44,15 +44,15 @@ export async function registerUser(req: Request, res: Response<IResponse>) {
 
 
 export async function loginUser(req: Request, res: Response<IResponse>) {
-    const { email, password } = req.body;
+    const { fullname, password } = req.body;
     try {
         const findUser: IUser | null = await User.findOne(
             {
-                where: { email: email }
+                where: { fullname: fullname }
             }
         );
         if (!findUser) {
-            return res.status(404).json({ success: false, message: "The full name or password is incorrect" })
+            return res.status(404).json({ success: false, message: "The fullname or password is incorrect" })
 
         }
 
