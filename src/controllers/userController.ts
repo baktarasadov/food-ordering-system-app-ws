@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from '../models/User';
-import { IUser } from "../types/user/IUser";
+import { IUser } from '../types/user/IUser';
 import { IResponse } from "../types/share/IResponse";
 import { UniqueConstraintError } from "sequelize";
 const bcrypt = require('bcrypt');
@@ -51,7 +51,7 @@ export async function updateUser(req: Request, res: Response<IResponse>) {
         }
         await findUser.update({ ...req.body });
 
-        const updatedUser = await User.findByPk(id);
+        const updatedUser: IUser | null = await User.findByPk(id);
         return res.status(200).json({ success: true, data: updatedUser as User, message: "User updated successfully" });
     } catch (err: any) {
         if (err instanceof UniqueConstraintError) {

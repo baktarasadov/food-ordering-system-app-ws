@@ -12,7 +12,6 @@ export async function registerUser(req: Request, res: Response<IResponse>) {
 
     try {
         const validatedData = await registerSchema.validate(req.body, { abortEarly: false });
-        // await registerSchema.validate(req.body, { abortEarly: false });
         const findUser: IUser | null = await User.findOne(
             {
                 where: { fullname: req.body.fullname }
@@ -35,7 +34,6 @@ export async function registerUser(req: Request, res: Response<IResponse>) {
     } catch (error: any) {
         console.log("Error", error);
         if (error instanceof yup.ValidationError) {
-            // Handle yup validation errors
             return res.status(400).json({ success: false, errors: error.errors, message: 'Invalid input data' });
         }
         return res.status(404).json({ success: false, message: "Internal Server Error" })
