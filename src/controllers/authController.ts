@@ -82,7 +82,7 @@ export async function loginAdmin(req: Request, res: Response<IResponse>) {
             }
         );
         if (!findUser) {
-            return res.status(404).json({ success: false, message: "Admin not found" })
+            return res.status(404).json({ success: false, message: "The Username or password is incorrect" })
 
         }
 

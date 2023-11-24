@@ -4,6 +4,7 @@ import { sequelize } from './config/dbConnect';
 import authRouter from './routes/authRoute';
 import userRouter from './routes/userRoute';
 import footerRouter from './routes/footerRoute';
+import categoryRouter from './routes/categoryRoute';
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -20,6 +21,8 @@ app.use(express.json({ limit: '10mb' }));
 app.use(base, authRouter);
 app.use(base, userRouter);
 app.use(base, footerRouter);
+app.use(base, categoryRouter);
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

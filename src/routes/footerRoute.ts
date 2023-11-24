@@ -7,7 +7,7 @@ const main = "/footers"
 
 footerRouter.post(`${main}/save`, authMiddleware, isAdmin, saveFooter);
 footerRouter.patch(`${main}/update/:id`, authMiddleware, isAdmin, updateFooter);
-footerRouter.get(`${main}/get/:id`, authMiddleware, isAdmin, getFooter);
+footerRouter.get(`${main}/get/:id`, getFooter);
 
 
 

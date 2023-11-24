@@ -33,6 +33,7 @@ export async function getUser(req: Request, res: Response<IResponse>) {
     }
 
 }
+
 export async function updateUser(req: Request, res: Response<IResponse>) {
     const id: string = req.params.id;
     const { password } = req.body;
