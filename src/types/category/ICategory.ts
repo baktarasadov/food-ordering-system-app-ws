@@ -1,4 +1,4 @@
 export interface ICategory {
-    id: Number;
-    title: String;
+    categoryId: Number;
+    categoryName: String;
 }

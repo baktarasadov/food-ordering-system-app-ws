@@ -4,7 +4,7 @@ import { IUser } from '../types/user/IUser';
 import { IResponse } from "../types/share/IResponse";
 import { UniqueConstraintError } from "sequelize";
 const bcrypt = require('bcrypt');
-export async function getUsers(req: Request, res: Response<IResponse>) {
+export async function getUsers(req: Request, res: Response<IResponse<IUser[]>>) {
     try {
         const userList: IUser[] = await User.findAll();
         if (!userList.length) {
@@ -17,7 +17,7 @@ export async function getUsers(req: Request, res: Response<IResponse>) {
 
 }
 
-export async function getUser(req: Request, res: Response<IResponse>) {
+export async function getUser(req: Request, res: Response<IResponse<IUser>>) {
     const id: string = req.params.id
 
 
@@ -34,7 +34,7 @@ export async function getUser(req: Request, res: Response<IResponse>) {
 
 }
 
-export async function updateUser(req: Request, res: Response<IResponse>) {
+export async function updateUser(req: Request, res: Response<IResponse<IUser>>) {
     const id: string = req.params.id;
     const { password } = req.body;
 
@@ -62,7 +62,7 @@ export async function updateUser(req: Request, res: Response<IResponse>) {
     }
 }
 
-export async function deleteUser(req: Request, res: Response<IResponse>) {
+export async function deleteUser(req: Request, res: Response<IResponse<IUser>>) {
     const id: string = req.params.id;
 
     try {
@@ -80,7 +80,7 @@ export async function deleteUser(req: Request, res: Response<IResponse>) {
     }
 }
 
-export async function getAdmin(req: Request, res: Response<IResponse>) {
+export async function getAdmin(req: Request, res: Response<IResponse<IUser>>) {
     const id: string = req.params.id
 
     try {

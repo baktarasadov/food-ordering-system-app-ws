@@ -5,7 +5,7 @@ import { ICategory } from "../types/category/ICategory";
 import { IResponse } from "../types/share/IResponse";
 import { Category } from "../models/Category";
 
-export async function saveCategory(req: Request, res: Response<IResponse>) {
+export async function saveCategory(req: Request, res: Response<IResponse<ICategory>>) {
 
     try {
         const validatedData = await categorySchema.validate(req.body, { abortEarly: false });
@@ -21,7 +21,7 @@ export async function saveCategory(req: Request, res: Response<IResponse>) {
     }
 }
 
-export async function deleteCategory(req: Request, res: Response<IResponse>) {
+export async function deleteCategory(req: Request, res: Response<IResponse<ICategory>>) {
     const id: string = req.params.id;
     try {
 
@@ -41,7 +41,7 @@ export async function deleteCategory(req: Request, res: Response<IResponse>) {
     }
 }
 
-export async function getAllCategories(req: Request, res: Response<IResponse>) {
+export async function getAllCategories(req: Request, res: Response<IResponse<ICategory[]>>) {
 
     try {
         const categories: ICategory[] = await Category.findAll();

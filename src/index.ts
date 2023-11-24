@@ -5,6 +5,7 @@ import authRouter from './routes/authRoute';
 import userRouter from './routes/userRoute';
 import footerRouter from './routes/footerRoute';
 import categoryRouter from './routes/categoryRoute';
+import productRouter from './routes/productRoute';
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -22,6 +23,8 @@ app.use(base, authRouter);
 app.use(base, userRouter);
 app.use(base, footerRouter);
 app.use(base, categoryRouter);
+app.use(base, productRouter);
+
 
 
 app.listen(port, () => {

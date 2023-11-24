@@ -1,19 +1,19 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../config/dbConnect';
 export class Category extends Model {
-    public id!: number;
-    public title!: String;
+    public categoryId!: number;
+    public categoryName!: String;
 }
 
 Category.init(
     {
-        id: {
+        categoryId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
 
         },
-        title: {
+        categoryName: {
             type: DataTypes.STRING,
             allowNull: true,
             unique: true,

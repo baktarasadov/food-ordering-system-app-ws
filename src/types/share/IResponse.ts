@@ -1,13 +1,13 @@
 import { IAuth } from '../auth/IAuth';
 import { ICategory } from '../category/ICategory';
 import { IFooter } from '../footer/IFooter';
+import { IProduct } from '../product/IProduct';
 import { IUser } from '../user/IUser';
-type dataType = IUser | IUser[] | IAuth | IFooter | ICategory | ICategory[]
 
-export interface IResponse {
+export interface IResponse<T> {
     success: boolean;
     message?: string;
-    data?: dataType
+    data?: T;
     errors?: String[]
 }
 

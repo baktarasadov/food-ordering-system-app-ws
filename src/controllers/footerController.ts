@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { IFooter } from "../types/footer/IFooter";
 import { Footer } from "../models/Footer";
 
-export async function saveFooter(req: Request, res: Response<IResponse>) {
+export async function saveFooter(req: Request, res: Response<IResponse<IFooter>>) {
     try {
         const validatedData = await footerSaveSchema.validate(req.body, { abortEarly: false });
 
@@ -22,7 +22,7 @@ export async function saveFooter(req: Request, res: Response<IResponse>) {
 
 }
 
-export async function updateFooter(req: Request, res: Response<IResponse>) {
+export async function updateFooter(req: Request, res: Response<IResponse<IFooter>>) {
 
     const id: string = req.params.id;
     try {
@@ -40,7 +40,7 @@ export async function updateFooter(req: Request, res: Response<IResponse>) {
 
 }
 
-export async function getFooter(req: Request, res: Response<IResponse>) {
+export async function getFooter(req: Request, res: Response<IResponse<IFooter>>) {
 
     const id: string = req.params.id;
     try {

@@ -7,8 +7,9 @@ import { registerSchema } from '../utils/validations/auth/authRegister'
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 import * as yup from 'yup';
+import { IAuth } from "../types/auth/IAuth";
 
-export async function registerUser(req: Request, res: Response<IResponse>) {
+export async function registerUser(req: Request, res: Response<IResponse<IAuth>>) {
 
     try {
         const validatedData = await registerSchema.validate(req.body, { abortEarly: false });
@@ -41,7 +42,7 @@ export async function registerUser(req: Request, res: Response<IResponse>) {
 }
 
 
-export async function loginUser(req: Request, res: Response<IResponse>) {
+export async function loginUser(req: Request, res: Response<IResponse<IAuth>>) {
     const { fullname, password } = req.body;
     try {
         const findUser: IUser | null = await User.findOne(
@@ -73,7 +74,7 @@ export async function loginUser(req: Request, res: Response<IResponse>) {
 
 
 
-export async function loginAdmin(req: Request, res: Response<IResponse>) {
+export async function loginAdmin(req: Request, res: Response<IResponse<IAuth>>) {
     const { fullname, password } = req.body;
     try {
         const findUser: IUser | null = await User.findOne(
