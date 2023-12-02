@@ -5,7 +5,7 @@ import { loginAdmin, loginUser, registerUser } from "../controllers/authControll
 
 const authRouter: Router = express.Router();
 
-const main = "/auth";
+const main: string = "/auth";
 authRouter.post(`${main}/register`, registerUser);
 authRouter.post(`${main}/login`, loginUser);
 authRouter.post(`${main}/admin/login`, loginAdmin);

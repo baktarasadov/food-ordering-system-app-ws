@@ -16,7 +16,6 @@ Category.init(
         categoryName: {
             type: DataTypes.STRING,
             allowNull: true,
-            unique: true,
         },
 
     },

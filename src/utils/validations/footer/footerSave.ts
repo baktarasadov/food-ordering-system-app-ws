@@ -7,7 +7,5 @@ export const footerSaveSchema = yup.object({
     description: yup.string().required().min(8).max(20),
     openingDay: yup.string().required().min(2).max(20),
     openingHour: yup.string().required().min(2).max(20),
-
-
 });
 

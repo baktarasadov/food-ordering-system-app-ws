@@ -4,7 +4,7 @@ import { deleteCategory, getAllCategories, saveCategory } from "../controllers/c
 import { authMiddleware, isAdmin } from "../middleware/authMiddleware";
 
 const categoryRouter: Router = express.Router();
-const main = "/categories";
+const main: string = "/categories";
 categoryRouter.post(`${main}/save`, authMiddleware, isAdmin, saveCategory);
 categoryRouter.delete(`${main}/delete/:id`, authMiddleware, isAdmin, deleteCategory);
 categoryRouter.get(`${main}/all`, getAllCategories);

@@ -1,7 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../config/dbConnect';
 import { Category } from './Category';
-import { Json } from 'sequelize/types/utils';
 export class Product extends Model {
     public productId!: number;
     public productName!: String;
@@ -9,7 +8,7 @@ export class Product extends Model {
     public price!: String;
     public img!: String;
     public extraOptions!: { title: String; price: String };
-
+    public campaign!: { isCampaign: boolean, campaignRate: number }
 
 
 }
@@ -25,7 +24,6 @@ Product.init(
         productName: {
             type: DataTypes.STRING,
             allowNull: true,
-            unique: true,
         },
         description: {
             type: DataTypes.STRING,
@@ -40,7 +38,10 @@ Product.init(
             allowNull: true,
         },
         extraOptions: {
-            type: DataTypes.JSONB,
+            type: DataTypes.ARRAY(DataTypes.JSON),
+        },
+        campaign: {
+            type: DataTypes.JSON
         },
 
     },

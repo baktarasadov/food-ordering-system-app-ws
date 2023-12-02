@@ -3,7 +3,7 @@ import { getFooter, saveFooter, updateFooter } from '../controllers/footerContro
 import { authMiddleware, isAdmin } from '../middleware/authMiddleware';
 
 const footerRouter = express.Router();
-const main = "/footers"
+const main: string = "/footers"
 
 footerRouter.post(`${main}/save`, authMiddleware, isAdmin, saveFooter);
 footerRouter.patch(`${main}/update/:id`, authMiddleware, isAdmin, updateFooter);

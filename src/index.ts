@@ -6,9 +6,11 @@ import userRouter from './routes/userRoute';
 import footerRouter from './routes/footerRoute';
 import categoryRouter from './routes/categoryRoute';
 import productRouter from './routes/productRoute';
+import orderRouter from './routes/orderRoute';
 const bodyParser = require("body-parser");
 
 const app = express();
+app.use(bodyParser.json());
 const cors = require('cors');
 const compression = require('compression');
 
@@ -24,6 +26,7 @@ app.use(base, userRouter);
 app.use(base, footerRouter);
 app.use(base, categoryRouter);
 app.use(base, productRouter);
+app.use(base, orderRouter);
 
 
 
