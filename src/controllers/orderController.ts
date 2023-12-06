@@ -64,18 +64,22 @@ export async function getAllOrders(req: Request, res: Response<IResponse<IOrder[
     }
 }
 
-export async function getOrder(req: Request, res: Response<IResponse<IOrder>>) {
+export async function getOrder(req: Request, res: Response<IResponse<IOrder[]>>) {
+    const email: string = req.params.email;
 
-    const id: string = req.params.id;
     try {
-        const findOrder: IOrder | null = await Order.findByPk(id);
-        if (!findOrder) {
+        const findOrder: IOrder[] | null = await Order.findAll({
+            where: { customer: email }
+        });
+
+        if (!findOrder || findOrder.length === 0) {
             return res.status(404).json({ success: false, message: "Order not found" });
         }
-        return res.status(200).json({ success: true, message: "Order found", data: findOrder })
+
+        return res.status(200).json({ success: true, message: "Order found", data: findOrder });
 
     } catch (error: any) {
+        console.error(error);
         return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-
 }

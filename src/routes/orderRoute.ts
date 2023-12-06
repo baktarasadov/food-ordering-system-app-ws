@@ -7,9 +7,9 @@ import { deleteOrder, getAllOrders, getOrder, saveOrder, updateOrder } from "../
 const orderRouter: Router = express.Router();
 const main: string = "/orders"
 orderRouter.get(`${main}/all`, authMiddleware, isAdmin, getAllOrders);
-orderRouter.get(`${main}/get/:id`, authMiddleware, getOrder);
+orderRouter.get(`${main}/get/:email`, authMiddleware, getOrder);
 
-orderRouter.post(`${main}/save`, authMiddleware, saveOrder);
+orderRouter.post(`${main}/save`, saveOrder);
 orderRouter.patch(`${main}/update/:id`, authMiddleware, updateOrder);
 
 orderRouter.delete(`${main}/delete/:id`, authMiddleware, deleteOrder);

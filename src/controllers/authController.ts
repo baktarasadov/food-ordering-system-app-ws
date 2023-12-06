@@ -54,9 +54,7 @@ export async function loginUser(req: Request, res: Response<IResponse<IAuth>>) {
             return res.status(404).json({ success: false, message: "The fullname or password is incorrect" })
 
         }
-
         const passwordMatch: boolean = await bcrypt.compare(password, findUser?.password);
-
         if (!passwordMatch) {
             return res.status(401).json({ success: false, message: "The full name or password is incorrect" });
         }
